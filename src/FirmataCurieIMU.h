@@ -7,6 +7,7 @@
 
 #include <ConfigurableFirmata.h>
 #include <FirmataFeature.h>
+#include <CurieIMU.h>
 
 #define CURIE_IMU                   (0x11)
 
