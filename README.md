@@ -1,6 +1,24 @@
 # FirmataCurieIMU
 Firmata wrapper for the CurieIMU library on the Arduino101
 
+## Installation
+
+1. Make sure you have the following dependencies installed in the `libraries` folder for your Arduino installation:
+  - [ConfigurableFirmata](https://github.com/firmata/ConfigurableFirmata)
+  - [CurieIMU](https://github.com/01org/corelibs-arduino101/tree/master/libraries/CurieIMU)
+
+2. Clone or download and copy FirmataCurieIMU into the `libraries` folder for your Arduino installation:
+
+## How to use
+
+Instructions on how to create a sketch that uses FirmataCurieIMU
+
+## Firmata clients
+
+### JavaScript
+
+Example code that calls the FirmataCurieIMU SYSEX extended interface
+
 ## Protocol
 
 ### Read accelerometer
