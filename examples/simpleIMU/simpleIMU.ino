@@ -2,6 +2,7 @@
 #include <ConfigurableFirmata.h>
 #include <FirmataExt.h>
 #include <FirmataReporting.h>
+#include <DigitalOutputFirmata.h>
 
 #include <CurieIMU.h>
 #include <FirmataCurieIMU.h>
@@ -9,6 +10,7 @@
 FirmataExt firmataExt;
 FirmataReporting reporting;
 FirmataCurieIMU curieIMU;
+DigitalOutputFirmata digitalOutput;
 
 void systemResetCallback()
 {
@@ -17,14 +19,12 @@ void systemResetCallback()
 
 void setup()
 {
-  // TODO - pass the version of this firmware rather than the Firmata protocol
-  // version. Making that change now however may break compatibility.
   Firmata.setFirmwareVersion(FIRMATA_MAJOR_VERSION, FIRMATA_MINOR_VERSION);
 
   firmataExt.addFeature(reporting);
   firmataExt.addFeature(curieIMU);
-  
-  /* systemResetCallback is declared here (in ConfigurableFirmata.ino) */
+  firmataExt.addFeature(digitalOutput);
+
   Firmata.attach(SYSTEM_RESET, systemResetCallback);
   Firmata.begin(57600);
   systemResetCallback();  // reset to default config
@@ -40,4 +40,3 @@ void loop()
     curieIMU.readAccelerometer();
   }
 }
-
