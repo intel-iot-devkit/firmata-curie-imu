@@ -44,16 +44,20 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
 
 void FirmataCurieIMU::reset()
 {
+  // initialize device
+  CurieIMU.begin();
+
+  // Set the accelerometer range to 2G
+  CurieIMU.setAccelerometerRange(2);
 }
 
 // FirmataCurieIMU interface functions
 
 void FirmataCurieIMU::readAccelerometer()
 {
-  // TODO: real reads
-  int xAxis = 255,
-      yAxis = 128,
-      zAxis = 1;
+  int xAxis, yAxis, zAxis;
+
+  CurieIMU.readAccelerometer(xAxis, yAxis, zAxis);
 
   Firmata.write(START_SYSEX);
   Firmata.write(CURIE_IMU);
