@@ -32,9 +32,6 @@ Response
  */
 ```
 
-3  
-4  
-
 ### Read gyro
 Query
 ```c
