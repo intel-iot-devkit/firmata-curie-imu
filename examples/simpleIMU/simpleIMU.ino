@@ -1,15 +1,16 @@
+/*
+  Simple Firmata with CurieIMU + digital output
+*/
 
 #include <ConfigurableFirmata.h>
 #include <FirmataExt.h>
-#include <FirmataReporting.h>
-#include <DigitalOutputFirmata.h>
+FirmataExt firmataExt;
 
 #include <CurieIMU.h>
 #include <FirmataCurieIMU.h>
-
-FirmataExt firmataExt;
-FirmataReporting reporting;
 FirmataCurieIMU curieIMU;
+
+#include <DigitalOutputFirmata.h>
 DigitalOutputFirmata digitalOutput;
 
 void systemResetCallback()
@@ -21,22 +22,19 @@ void setup()
 {
   Firmata.setFirmwareVersion(FIRMATA_MAJOR_VERSION, FIRMATA_MINOR_VERSION);
 
-  firmataExt.addFeature(reporting);
   firmataExt.addFeature(curieIMU);
   firmataExt.addFeature(digitalOutput);
 
   Firmata.attach(SYSTEM_RESET, systemResetCallback);
   Firmata.begin(57600);
-  systemResetCallback();  // reset to default config
+
+  // set reset to default config
+  systemResetCallback();
 }
 
 void loop()
 {
   while (Firmata.available()) {
     Firmata.processInput();
-  }
-
-  if (reporting.elapsed()) {
-    curieIMU.readAccelerometer();
   }
 }

@@ -50,6 +50,21 @@ void FirmataCurieIMU::reset()
 
 void FirmataCurieIMU::readAccelerometer()
 {
+  // TODO: real reads
+  int xAxis = 255,
+      yAxis = 128,
+      zAxis = 1;
+
+  Firmata.write(START_SYSEX);
+  Firmata.write(CURIE_IMU);
+  Firmata.write(CURIE_IMU_READ_ACCEL);
+  Firmata.write((byte)xAxis & 0x7F);
+  Firmata.write((byte)(xAxis >> 7) & 0x7F);
+  Firmata.write((byte)yAxis & 0x7F);
+  Firmata.write((byte)(yAxis >> 7) & 0x7F);
+  Firmata.write((byte)zAxis & 0x7F);
+  Firmata.write((byte)(zAxis >> 7) & 0x7F);
+  Firmata.write(END_SYSEX);
 }
 
 void FirmataCurieIMU::readGyro()
