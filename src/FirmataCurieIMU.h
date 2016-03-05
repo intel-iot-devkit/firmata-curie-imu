@@ -8,6 +8,11 @@
 #include <ConfigurableFirmata.h>
 #include <FirmataFeature.h>
 
+#define CURIE_IMU                   (0x11)
+
+#define CURIE_IMU_READ_ACCEL        (0x00)
+#define CURIE_IMU_READ_GYRO         (0x01)
+
 class FirmataCurieIMU:public FirmataFeature
 {
 public:
@@ -20,7 +25,8 @@ public:
   void reset();
 
   // FirmataCurieIMU interface functions
-  void report();
+  void readAccelerometer();
+  void readGyro();
 };
 
 #endif
