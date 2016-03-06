@@ -111,7 +111,8 @@ Query
  * 0 START_SYSEX                (0xF0)
  * 1 CURIE_IMU                  (0x11)
  * 2 CURIE_IMU_SHOCK_DETECT     (0x03)
- * 3 END_SYSEX                  (0xF7)
+ * 3 enable/disable, bit 0
+ * 4 END_SYSEX                  (0xF7)
  * -----------------------------------------------------
  */
 ```
@@ -120,6 +121,8 @@ Response
 ```c
 NONE
 ```
+
+To enable shock detection, send 1 as the enable flag (byte 3). To disable shock detection, send 0 as the enable flag (byte 3).
 
 When shock detection is enabled, the following message will be sent at every sampling interval:
 ```c
@@ -140,7 +143,8 @@ Query
  * 0 START_SYSEX                (0xF0)
  * 1 CURIE_IMU                  (0x11)
  * 2 CURIE_IMU_STEP_COUNTER     (0x04)
- * 3 END_SYSEX                  (0xF7)
+ * 3 enable/disable, bit 0
+ * 4 END_SYSEX                  (0xF7)
  * -----------------------------------------------------
  */
 ```
@@ -149,6 +153,8 @@ Response
 ```c
 NONE
 ```
+
+To enable step detection, send 1 as the enable flag (byte 3). To disable step detection, send 0 as the enable flag (byte 3).
 
 When step counting is enabled, the following message will be sent at every sampling interval:
 ```c
@@ -170,7 +176,8 @@ Query
  * 0 START_SYSEX                (0xF0)
  * 1 CURIE_IMU                  (0x11)
  * 2 CURIE_IMU_TAP_DETECT       (0x05)
- * 3 END_SYSEX                  (0xF7)
+ * 3 enable/disable, bit 0
+ * 4 END_SYSEX                  (0xF7)
  * -----------------------------------------------------
  */
 ```
@@ -179,6 +186,8 @@ Response
 ```c
 NONE
 ```
+
+To enable tap detection, send 1 as the enable flag (byte 3). To disable tap detection, send 0 as the enable flag (byte 3).
 
 When tap detection is enabled, the following message will be sent at every sampling interval:
 ```c
