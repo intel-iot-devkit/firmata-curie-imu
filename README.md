@@ -22,7 +22,7 @@ Example code that calls the FirmataCurieIMU SYSEX extended interface
 ## Protocol
 
 ### Read accelerometer
-Query
+#### Query
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -33,7 +33,7 @@ Query
  */
 ```
 
-Response
+#### Response
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -51,7 +51,7 @@ Response
 ```
 
 ### Read gyro
-Query
+#### Query
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -62,7 +62,7 @@ Query
  */
 ```
 
-Response
+#### Response
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -80,7 +80,7 @@ Response
 ```
 
 ### Read temperature
-Query
+#### Query
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -91,7 +91,7 @@ Query
  */
 ```
 
-Response
+#### Response
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -105,7 +105,7 @@ Response
 ```
 
 ### Enable shock detection
-Query
+#### Query
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -117,13 +117,14 @@ Query
  */
 ```
 
-Response
+#### Response
 ```c
 NONE
 ```
 
 To enable shock detection, send 1 as the enable flag (byte 3). To disable shock detection, send 0 as the enable flag (byte 3).
 
+#### Message
 When shock detection is enabled, the following message will be sent at every sampling interval:
 ```c
  /* -----------------------------------------------------
@@ -137,7 +138,7 @@ When shock detection is enabled, the following message will be sent at every sam
 ```
 
 ### Enable step counter
-Query
+#### Query
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -149,13 +150,14 @@ Query
  */
 ```
 
-Response
+#### Response
 ```c
 NONE
 ```
 
 To enable step detection, send 1 as the enable flag (byte 3). To disable step detection, send 0 as the enable flag (byte 3).
 
+#### Message
 When step counting is enabled, the following message will be sent at every sampling interval:
 ```c
  /* -----------------------------------------------------
@@ -170,7 +172,7 @@ When step counting is enabled, the following message will be sent at every sampl
 ```
 
 ### Enable tap detection
-Query
+#### Query
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -182,13 +184,14 @@ Query
  */
 ```
 
-Response
+#### Response
 ```c
 NONE
 ```
 
 To enable tap detection, send 1 as the enable flag (byte 3). To disable tap detection, send 0 as the enable flag (byte 3).
 
+#### Message
 When tap detection is enabled, the following message will be sent at every sampling interval:
 ```c
  /* -----------------------------------------------------
@@ -202,7 +205,7 @@ When tap detection is enabled, the following message will be sent at every sampl
 ```
 
 ### Read motion sensor
-Query
+#### Query
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -213,7 +216,7 @@ Query
  */
 ```
 
-Response
+#### Response
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
