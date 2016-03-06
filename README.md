@@ -78,3 +78,151 @@ Response
  * -----------------------------------------------------
  */
 ```
+
+### Read temperature
+Query
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_READ_TEMP        (0x02)
+ * 3 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+Response
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_READ_TEMP        (0x02)
+ * 3 temperature, bits 0-6 (LSB)
+ * 4 temperature, bits 7-13 (MSB)
+ * 5 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+### Enable shock detection
+Query
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_SHOCK_DETECT     (0x03)
+ * 3 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+Response
+```c
+NONE
+```
+
+When shock detection is enabled, the following message will be sent at every sampling interval:
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_SHOCK_DETECT     (0x03)
+ * 3 axis (bits 0-3), direction (bit4)
+ * 4 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+### Enable step counter
+Query
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_STEP_COUNTER     (0x04)
+ * 3 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+Response
+```c
+NONE
+```
+
+When step counting is enabled, the following message will be sent at every sampling interval:
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_STEP_COUNTER     (0x04)
+ * 3 step count, bits 0-6 (LSB)
+ * 4 step count, bits 7-13 (MSB)
+ * 5 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+### Enable tap detection
+Query
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_TAP_DETECT       (0x05)
+ * 3 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+Response
+```c
+NONE
+```
+
+When tap detection is enabled, the following message will be sent at every sampling interval:
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_TAP_DETECT       (0x05)
+ * 3 axis (bits 0-3), direction (bit4)
+ * 4 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+### Read motion sensor
+Query
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_READ_MOTION      (0x06)
+ * 3 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
+
+Response
+```c
+ /* -----------------------------------------------------
+ * 0 START_SYSEX                (0xF0)
+ * 1 CURIE_IMU                  (0x11)
+ * 2 CURIE_IMU_READ_MOTION      (0x06)
+ * 3 x axis accelerometer, bits 0-6 (LSB)
+ * 4 x axis accelerometer, bits 7-13 (MSB)
+ * 5 y axis accelerometer, bits 0-6 (LSB)
+ * 6 y axis accelerometer, bits 7-13 (MSB)
+ * 7 z axis accelerometer, bits 0-6 (LSB)
+ * 8 z axis accelerometer, bits 7-13 (MSB)
+ * 9 x axis gyro, bits 0-6 (LSB)
+ * 10 x axis gyro, bits 7-13 (MSB)
+ * 11 y axis gyro, bits 0-6 (LSB)
+ * 12 y axis gyro, bits 7-13 (MSB)
+ * 13 z axis gyro, bits 0-6 (LSB)
+ * 14 z axis gyro, bits 7-13 (MSB)
+ * 15 END_SYSEX                  (0xF7)
+ * -----------------------------------------------------
+ */
+```
