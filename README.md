@@ -17,7 +17,9 @@ Instructions on how to create a sketch that uses FirmataCurieIMU
 
 ### JavaScript
 
-Example code that calls the FirmataCurieIMU SYSEX extended interface
+Example code that calls the FirmataCurieIMU SYSEX extended interface is here:
+
+https://github.com/hybridgroup/firmata-curie-imu.js
 
 ## Protocol
 
