@@ -40,7 +40,7 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
         }
         if (imuCommand == CURIE_IMU_READ_TEMP)
         {
-            readTemp();
+            readTemperature();
             return true;
         }
         if (imuCommand == CURIE_IMU_SHOCK_DETECT)
@@ -79,7 +79,7 @@ void FirmataCurieIMU::reset()
     CurieIMU.setGyroRange(2000);
 
     //read temperature in celcius 
-    CurieIMU.readTemp();
+    CurieIMU.readTemperature();
 
     //shock detected enabled
     CurieIMU.shockDetected();
@@ -133,10 +133,10 @@ void FirmataCurieIMU::readGyro()
     Firmata.write(END_SYSEX);
 
 }
-void FirmataCurieIMU::readTemp()
+void FirmataCurieIMU::readTemperature()
 {
     float Celcius;
-    CurieIMU.readTemp(Celcius);
+    CurieIMU.readTemperature(Celcius);
 
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
@@ -177,18 +177,18 @@ void FirmataCurieIMU::readMotion();
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_READ_MOTION);
-    Firmata.write((byte)gxAxis & 0x7F);
-    Firmata.write((byte)(gxAxis >> 7) & 0x7F);
-    Firmata.write((byte)gyAxis & 0x7F);
-    Firmata.write((byte)(gyAxis >> 7) & 0x7F);
-    Firmata.write((byte)gzAxis & 0x7F);
-    Firmata.write((byte)(gzAxis >> 7) & 0x7F);
+    Firmata.write((byte)gx & 0x7F);
+    Firmata.write((byte)(gx >> 7) & 0x7F);
+    Firmata.write((byte)gy & 0x7F);
+    Firmata.write((byte)(gy >> 7) & 0x7F);
+    Firmata.write((byte)gz & 0x7F);
+    Firmata.write((byte)(gz >> 7) & 0x7F);
 
-    Firmata.write((byte)axAxis & 0x7F);
-    Firmata.write((byte)(axAxis >> 7) & 0x7F);
-    Firmata.write((byte)ayAxis & 0x7F);
-    Firmata.write((byte)(ayAxis >> 7) & 0x7F);
-    Firmata.write((byte)azAxis & 0x7F);
-    Firmata.write((byte)(azAxis >> 7) & 0x7F);
+    Firmata.write((byte)ax & 0x7F);
+    Firmata.write((byte)(ax >> 7) & 0x7F);
+    Firmata.write((byte)ay & 0x7F);
+    Firmata.write((byte)(ay >> 7) & 0x7F);
+    Firmata.write((byte)az & 0x7F);
+    Firmata.write((byte)(az >> 7) & 0x7F);
     Firmata.write(END_SYSEX);
 }

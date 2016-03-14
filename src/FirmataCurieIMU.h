@@ -33,8 +33,8 @@ public:
     // FirmataCurieIMU interface functions
     void readAccelerometer();
     void readGyro();
-    void readTemp();
-    void shockDetected();
+    void readTemperature();
+    void shockDetected;
     void enableStepCounter();
     void enableTapDetection();
     void readMotion();
