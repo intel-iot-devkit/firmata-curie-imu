@@ -38,6 +38,7 @@ public:
     void enableStepCounter();
     void enableTapDetection();
     void readMotion();
+
 };
 
 #endif

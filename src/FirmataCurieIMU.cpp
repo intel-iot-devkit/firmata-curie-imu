@@ -170,9 +170,9 @@ void FirmataCurieIMU::enableTapDetection()
 void FirmataCurieIMU::readMotion();
 {
 
-    int axAxis, ayAxis, azAxis, gxAxis, gyAxis, gzAxis;
+    int ax, ay, az, gx, gy, gz;
 
-    CurieIMU.readGyro(gxAxis, gyAxis, gzAxis);
+    CurieIMU.readMotion(ax, ay, az, gx, gy, gz);
 
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
