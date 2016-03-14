@@ -64,7 +64,6 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
             return true;
         }
     }
-    }
     return false;
 }
 
