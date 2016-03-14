@@ -119,15 +119,17 @@ void FirmataCurieIMU::readGyro()
 
 void FirmataCurieIMU::readTemperature()
 {
-    // float Celcius;
-    // CurieIMU.readTemperature(Celcius);
-    //
-    // Firmata.write(START_SYSEX);
-    // Firmata.write(CURIE_IMU);
-    // Firmata.write(CURIE_IMU_READ_TEMP);
-    // Firmata.write((byte)Celcius & 0x7F);
-    // Firmata.write((byte)(Celcius >> 7) & 0x7F);
-    // Firmata.write(END_SYSEX);
+    int temp = CurieIMU.readTemperature();
+    byte* b = (byte*) &temp;
+
+    Firmata.write(START_SYSEX);
+    Firmata.write(CURIE_IMU);
+    Firmata.write(CURIE_IMU_READ_TEMP);
+    Firmata.write((byte)b[0] & 0x7F);
+    Firmata.write((byte)(b[0] >> 7) & 0x7F);
+    Firmata.write((byte)b[1] & 0x7F);
+    Firmata.write((byte)(b[1] >> 7) & 0x7F);
+    Firmata.write(END_SYSEX);
 }
 
 void FirmataCurieIMU::enableShockDetection()
