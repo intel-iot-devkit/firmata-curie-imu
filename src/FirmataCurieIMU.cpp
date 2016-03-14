@@ -8,6 +8,7 @@ FirmataCurieIMU.cpp
 static boolean detectShocks = false;
 static boolean countSteps = false;
 static boolean detectTaps = false;
+long lastStepCount = 0;
 
 static FirmataCurieIMU* current;
 static void callback(void)
@@ -91,10 +92,11 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
     // set the gyro range 2000 (+/-2000)
     CurieIMU.setGyroRange(2000);
 
+    //set step detection
+    CurieIMU.setStepDetectionMode(CURIE_IMU_STEP_MODE_NORMAL);
+
     current = this;
     CurieIMU.attachInterrupt(callback);
-
-    CurieIMU.setStepDetectionMode(CURIE_IMU_STEP_MODE_NORMAL);
 }
 
 // FirmataCurieIMU interface functions
@@ -202,12 +204,16 @@ void FirmataCurieIMU::shockDetected()
 
 void FirmataCurieIMU::enableStepCounter(boolean enable)
 {
+    if (enable) {
+        CurieIMU.interrupts(CURIE_IMU_STEP);
+    } else {
+        CurieIMU.noInterrupts(CURIE_IMU_STEP);
+    }
   countSteps = enable;
 }
 
 void FirmataCurieIMU::stepDetected()
 {
-    long lastStepCount = 0;
     int stepCount = CurieIMU.getStepCount();
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
