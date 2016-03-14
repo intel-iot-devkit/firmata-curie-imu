@@ -45,7 +45,7 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
         }
         if (imuCommand == CURIE_IMU_SHOCK_DETECT)
         {
-            shockDetected();
+            enableShockDetection();
             return true;
         }
         if (imuCommand == CURIE_IMU_STEP_COUNTER)
@@ -75,24 +75,8 @@ void FirmataCurieIMU::reset()
     // Set the accelerometer range to 2G
     CurieIMU.setAccelerometerRange(2);
 
-    // set the gyro range 2000 (+/-2000°/s)
+    // set the gyro range 2000 (+/-2000ï¿½/s)
     CurieIMU.setGyroRange(2000);
-
-    //read temperature in celcius 
-    CurieIMU.readTemperature();
-
-    //shock detected enabled
-    CurieIMU.shockDetected();
-
-    //step counter enabled
-    CurieIMU.enableStepCounter();
-
-    //tap detect enabled
-    CurieIMU.enableTapDetection();
-
-    //read motion 
-    CurieIMU.readMotion();
-
 }
 
 // FirmataCurieIMU interface functions
@@ -131,48 +115,62 @@ void FirmataCurieIMU::readGyro()
     Firmata.write((byte)zAxis & 0x7F);
     Firmata.write((byte)(zAxis >> 7) & 0x7F);
     Firmata.write(END_SYSEX);
-
 }
+
 void FirmataCurieIMU::readTemperature()
 {
-    float Celcius;
-    CurieIMU.readTemperature(Celcius);
-
-    Firmata.write(START_SYSEX);
-    Firmata.write(CURIE_IMU);
-    Firmata.write(CURIE_IMU_READ_TEMP);
-    Firmata.write((byte)Celcius & 0x7F);
-    Firmata.write((byte)(Celcius >> 7) & 0x7F);
-    Firmata.write(END_SYSEX);
+    // float Celcius;
+    // CurieIMU.readTemperature(Celcius);
+    //
+    // Firmata.write(START_SYSEX);
+    // Firmata.write(CURIE_IMU);
+    // Firmata.write(CURIE_IMU_READ_TEMP);
+    // Firmata.write((byte)Celcius & 0x7F);
+    // Firmata.write((byte)(Celcius >> 7) & 0x7F);
+    // Firmata.write(END_SYSEX);
 }
-void FirmataCurieIMU::shockDetected() 
+
+void FirmataCurieIMU::enableShockDetection()
 {
-    
+  // TODO: implement
+}
+
+void FirmataCurieIMU::shockDetected()
+{
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_SHOCK_DETECT);
     Firmata.write(END_SYSEX);
 }
+
 void FirmataCurieIMU::enableStepCounter()
+{
+  // TODO: implement
+}
+
+void FirmataCurieIMU::stepDetected()
 {
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_STEP_COUNTER);
     Firmata.write(END_SYSEX);
 }
+
 void FirmataCurieIMU::enableTapDetection()
 {
-    Firmata.write(START_SYSEX);
-    Firmata.write(CURIE_IMU);
-    Firmata.write(CURIE_IMU_TAP_DETECT);
-    Firmata.write(END_SYSEX);
+  // TODO: implement
 }
-void FirmataCurieIMU::readMotion();
-{
 
+void FirmataCurieIMU::tapDetected()
+{
+  // TODO: implement
+}
+
+void FirmataCurieIMU::readMotion()
+{
     int ax, ay, az, gx, gy, gz;
 
-    CurieIMU.readMotion(ax, ay, az, gx, gy, gz);
+    CurieIMU.readMotionSensor(ax, ay, az, gx, gy, gz);
 
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
