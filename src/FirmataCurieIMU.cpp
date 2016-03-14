@@ -93,6 +93,8 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
 
     current = this;
     CurieIMU.attachInterrupt(callback);
+
+    CurieIMU.setStepDetectionMode(CURIE_IMU_STEP_MODE_NORMAL);
 }
 
 // FirmataCurieIMU interface functions
@@ -205,9 +207,15 @@ void FirmataCurieIMU::enableStepCounter(boolean enable)
 
 void FirmataCurieIMU::stepDetected()
 {
+    long lastStepCount = 0;
+    int stepCount = CurieIMU.getStepCount();
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_STEP_COUNTER);
+    if (stepCount != lastStepCount) {
+        Firmata.write(stepCount);
+        lastStepCount = stepCount;
+    }
     Firmata.write(END_SYSEX);
 }
 
@@ -250,5 +258,8 @@ void FirmataCurieIMU::eventCallback()
 {
     if (CurieIMU.getInterruptStatus(CURIE_IMU_SHOCK) && detectShocks) {
         shockDetected();
+    }
+    if (CurieIMU.getInterruptStatus(CURIE_IMU_STEP) && countSteps) {
+        stepDetected();
     }
 }
