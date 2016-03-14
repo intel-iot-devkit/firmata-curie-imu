@@ -43,6 +43,27 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
             readTemp();
             return true;
         }
+        if (imuCommand == CURIE_IMU_SHOCK_DETECT)
+        {
+            shockDetected();
+            return true;
+        }
+        if (imuCommand == CURIE_IMU_STEP_COUNTER)
+        {
+            enableStepCounter();
+            return true;
+        }
+        if (imuCommand == CURIE_IMU_TAP_DETECT)
+        {
+            enableTapDetection();
+            return true;
+        }
+        if (imuCommand == CURIE_IMU_READ_MOTION)
+        {
+            readMotion();
+            return true;
+        }
+    }
     }
     return false;
 }
@@ -66,8 +87,12 @@ void FirmataCurieIMU::reset()
 
     //step counter enabled
     CurieIMU.enableStepCounter();
-    
 
+    //tap detect enabled
+    CurieIMU.enableTapDetection();
+
+    //read motion 
+    CurieIMU.readMotion();
 
 }
 
@@ -159,6 +184,7 @@ void FirmataCurieIMU::readMotion();
     Firmata.write((byte)(gyAxis >> 7) & 0x7F);
     Firmata.write((byte)gzAxis & 0x7F);
     Firmata.write((byte)(gzAxis >> 7) & 0x7F);
+
     Firmata.write((byte)axAxis & 0x7F);
     Firmata.write((byte)(axAxis >> 7) & 0x7F);
     Firmata.write((byte)ayAxis & 0x7F);
