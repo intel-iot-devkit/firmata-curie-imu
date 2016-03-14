@@ -34,13 +34,18 @@ public:
     void readAccelerometer();
     void readGyro();
     void readTemperature();
-    void enableShockDetection();
-    void shockDetected();
-    void enableStepCounter();
-    void stepDetected();
-    void enableTapDetection();
-    void tapDetected();
     void readMotion();
+
+    void enableShockDetection(boolean enable);
+    void shockDetected();
+
+    void enableStepCounter(boolean enable);
+    void stepDetected();
+
+    void enableTapDetection(boolean enable);
+    void tapDetected();
+
+    void report();
 };
 
 #endif

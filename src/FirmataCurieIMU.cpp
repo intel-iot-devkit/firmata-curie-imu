@@ -5,6 +5,10 @@ FirmataCurieIMU.cpp
 #include <ConfigurableFirmata.h>
 #include "FirmataCurieIMU.h"
 
+static boolean detectShocks = false;
+static boolean countSteps = false;
+static boolean detectTaps = false;
+
 FirmataCurieIMU::FirmataCurieIMU()
 {
 }
@@ -45,17 +49,20 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
         }
         if (imuCommand == CURIE_IMU_SHOCK_DETECT)
         {
-            enableShockDetection();
+            boolean enable = (boolean)argv[1];
+            enableShockDetection(enable);
             return true;
         }
         if (imuCommand == CURIE_IMU_STEP_COUNTER)
         {
-            enableStepCounter();
+            boolean enable = (boolean)argv[1];
+            enableStepCounter(enable);
             return true;
         }
         if (imuCommand == CURIE_IMU_TAP_DETECT)
         {
-            enableTapDetection();
+            boolean enable = (boolean)argv[1];
+            enableTapDetection(enable);
             return true;
         }
         if (imuCommand == CURIE_IMU_READ_MOTION)
@@ -132,9 +139,9 @@ void FirmataCurieIMU::readTemperature()
     Firmata.write(END_SYSEX);
 }
 
-void FirmataCurieIMU::enableShockDetection()
+void FirmataCurieIMU::enableShockDetection(boolean enable)
 {
-  // TODO: implement
+    detectShocks = enable;
 }
 
 void FirmataCurieIMU::shockDetected()
@@ -145,9 +152,9 @@ void FirmataCurieIMU::shockDetected()
     Firmata.write(END_SYSEX);
 }
 
-void FirmataCurieIMU::enableStepCounter()
+void FirmataCurieIMU::enableStepCounter(boolean enable)
 {
-  // TODO: implement
+  countSteps = enable;
 }
 
 void FirmataCurieIMU::stepDetected()
@@ -158,14 +165,27 @@ void FirmataCurieIMU::stepDetected()
     Firmata.write(END_SYSEX);
 }
 
-void FirmataCurieIMU::enableTapDetection()
+void FirmataCurieIMU::enableTapDetection(boolean enable)
 {
-  // TODO: implement
+  detectTaps = enable;
 }
 
 void FirmataCurieIMU::tapDetected()
 {
   // TODO: implement
+}
+
+void FirmataCurieIMU::report()
+{
+    if (detectShocks) {
+        shockDetected();
+    }
+    if (countSteps) {
+        stepDetected();
+    }
+    if (detectTaps) {
+        tapDetected();
+    }
 }
 
 void FirmataCurieIMU::readMotion()

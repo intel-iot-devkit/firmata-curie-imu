@@ -6,6 +6,9 @@
 #include <FirmataExt.h>
 FirmataExt firmataExt;
 
+#include <FirmataReporting.h>
+FirmataReporting reporting;
+
 #include <CurieIMU.h>
 #include <FirmataCurieIMU.h>
 FirmataCurieIMU curieIMU;
@@ -22,6 +25,7 @@ void setup()
 {
   Firmata.setFirmwareVersion(FIRMATA_MAJOR_VERSION, FIRMATA_MINOR_VERSION);
 
+  firmataExt.addFeature(reporting);
   firmataExt.addFeature(curieIMU);
   firmataExt.addFeature(digitalOutput);
 
@@ -36,5 +40,9 @@ void loop()
 {
   while (Firmata.available()) {
     Firmata.processInput();
+  }
+
+  if (reporting.elapsed()) {
+    curieIMU.report();
   }
 }
