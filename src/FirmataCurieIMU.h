@@ -45,7 +45,7 @@ public:
     void enableTapDetection(boolean enable);
     void tapDetected();
 
-    void report();
+    void eventCallback(void);
 };
 
 #endif
