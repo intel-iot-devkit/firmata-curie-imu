@@ -37,7 +37,7 @@ public:
     void readMotion();
 
     void enableShockDetection(boolean enable);
-    void shockDetected();
+    static void shockDetected();
 
     void enableStepCounter(boolean enable);
     void stepDetected();

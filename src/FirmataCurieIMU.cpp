@@ -4,6 +4,7 @@ FirmataCurieIMU.cpp
 
 #include <ConfigurableFirmata.h>
 #include "FirmataCurieIMU.h"
+#include <csignal>
 
 static boolean detectShocks = false;
 static boolean countSteps = false;
@@ -74,7 +75,7 @@ boolean FirmataCurieIMU::handleSysex(byte command, byte argc, byte *argv)
     return false;
 }
 
-void FirmataCurieIMU::reset()
+ void FirmataCurieIMU::reset()
 {
     // initialize device
     CurieIMU.begin();
@@ -82,8 +83,17 @@ void FirmataCurieIMU::reset()
     // Set the accelerometer range to 2G
     CurieIMU.setAccelerometerRange(2);
 
-    // set the gyro range 2000 (+/-2000�/s)
+    // set the gyro range 2000 (+/-2000)
     CurieIMU.setGyroRange(2000);
+
+
+    CurieIMU.attachInterrupt(shockDetected);
+
+    //Enable Shock Detection 
+    CurieIMU.setDetectionThreshold(CURIE_IMU_SHOCK, 1500); // 1.5g = 1500 mg
+    CurieIMU.setDetectionDuration(CURIE_IMU_SHOCK, 50);   // 50ms
+    CurieIMU.interrupts(CURIE_IMU_SHOCK);
+    
 }
 
 // FirmataCurieIMU interface functions
@@ -144,11 +154,20 @@ void FirmataCurieIMU::enableShockDetection(boolean enable)
     detectShocks = enable;
 }
 
-void FirmataCurieIMU::shockDetected()
+ void FirmataCurieIMU::shockDetected()
 {
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_SHOCK_DETECT);
+    if (CurieIMU.getInterruptStatus(CURIE_IMU_SHOCK))
+    {
+        if (CurieIMU.shockDetected(X_AXIS, POSITIVE));
+        if (CurieIMU.shockDetected(X_AXIS, NEGATIVE));
+        if (CurieIMU.shockDetected(Y_AXIS, POSITIVE));
+        if (CurieIMU.shockDetected(Y_AXIS, NEGATIVE));
+        if (CurieIMU.shockDetected(Z_AXIS, POSITIVE));
+        if (CurieIMU.shockDetected(Z_AXIS, NEGATIVE));
+    }
     Firmata.write(END_SYSEX);
 }
 
