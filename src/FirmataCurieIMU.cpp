@@ -8,7 +8,6 @@ FirmataCurieIMU.cpp
 static boolean detectShocks = false;
 static boolean countSteps = false;
 static boolean detectTaps = false;
-long lastStepCount = 0;
 
 static FirmataCurieIMU* current;
 static void callback(void)
@@ -208,9 +207,10 @@ void FirmataCurieIMU::enableStepCounter(boolean enable)
         CurieIMU.setStepCountEnabled(true);
         CurieIMU.interrupts(CURIE_IMU_STEP);
     } else {
+        CurieIMU.setStepCountEnabled(false);
         CurieIMU.noInterrupts(CURIE_IMU_STEP);
     }
-  countSteps = enable;
+    countSteps = enable;
 }
 
 void FirmataCurieIMU::stepDetected()
@@ -219,11 +219,8 @@ void FirmataCurieIMU::stepDetected()
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_STEP_COUNTER);
-    if (stepCount != lastStepCount) {
-        Firmata.write((byte)stepCount & 0x7F);
-        Firmata.write((byte)(stepCount >> 7) & 0x7F);
-        lastStepCount = stepCount;
-    }
+    Firmata.write((byte)stepCount & 0x7F);
+    Firmata.write((byte)(stepCount >> 7) & 0x7F);
     Firmata.write(END_SYSEX);
 }
 
