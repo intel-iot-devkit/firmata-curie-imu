@@ -226,12 +226,53 @@ void FirmataCurieIMU::stepDetected()
 
 void FirmataCurieIMU::enableTapDetection(boolean enable)
 {
-  detectTaps = enable;
+    if (enable) {
+        CurieIMU.interrupts(CURIE_IMU_TAP);
+    }
+    else {
+        CurieIMU.noInterrupts(CURIE_IMU_TAP);
+    }
+    detectTaps = enable;
 }
 
 void FirmataCurieIMU::tapDetected()
 {
   // TODO: implement
+    Firmata.write(START_SYSEX);
+    Firmata.write(CURIE_IMU);
+    Firmata.write(CURIE_IMU_TAP_DETECT);
+
+    if (CurieIMU.tapDetected(X_AXIS, POSITIVE)) {
+        Firmata.write(X_AXIS);
+        Firmata.write(POSITIVE);
+    }
+
+    if (CurieIMU.tapDetected(X_AXIS, NEGATIVE)) {
+        Firmata.write(X_AXIS);
+        Firmata.write(NEGATIVE);
+    }
+
+    if (CurieIMU.tapDetected(Y_AXIS, POSITIVE)) {
+        Firmata.write(Y_AXIS);
+        Firmata.write(POSITIVE);
+    }
+
+    if (CurieIMU.tapDetected(Y_AXIS, NEGATIVE)) {
+        Firmata.write(Y_AXIS);
+        Firmata.write(NEGATIVE);
+    }
+
+    if (CurieIMU.tapDetected(Z_AXIS, POSITIVE)) {
+        Firmata.write(Z_AXIS);
+        Firmata.write(POSITIVE);
+    }
+
+    if (CurieIMU.tapDetected(Z_AXIS, NEGATIVE)) {
+        Firmata.write(Z_AXIS);
+        Firmata.write(NEGATIVE);
+    }
+
+    Firmata.write(END_SYSEX)
 }
 
 void FirmataCurieIMU::readMotion()
@@ -266,5 +307,8 @@ void FirmataCurieIMU::eventCallback()
     }
     if (CurieIMU.getInterruptStatus(CURIE_IMU_STEP) && countSteps) {
         stepDetected();
+    }
+    if (CurieIMU.getInterruptStatus(CURIE_IMU_TAP) && detectTaps) {
+        tapDetected();
     }
 }
