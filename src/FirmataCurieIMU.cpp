@@ -219,7 +219,8 @@ void FirmataCurieIMU::stepDetected()
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_STEP_COUNTER);
     if (stepCount != lastStepCount) {
-        Firmata.write(stepCount);
+        Firmata.write((byte)stepCount & 0x7F);
+        Firmata.write((byte)(stepCount >> 7) & 0x7F);
         lastStepCount = stepCount;
     }
     Firmata.write(END_SYSEX);
