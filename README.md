@@ -99,9 +99,11 @@ https://github.com/hybridgroup/firmata-curie-imu.js
  * 0 START_SYSEX                (0xF0)
  * 1 CURIE_IMU                  (0x11)
  * 2 CURIE_IMU_READ_TEMP        (0x02)
- * 3 temperature, bits 0-6 (LSB)
- * 4 temperature, bits 7-13 (MSB)
- * 5 END_SYSEX                  (0xF7)
+ * 3 float temperature, byte 0, bits 0-6 (LSB)
+ * 4 float temperature, byte 0, bits 7-13 (MSB)
+ * 5 float temperature, byte 1, bits 0-6 (LSB)
+ * 6 float temperature, byte 1, bits 7-13 (MSB)
+ * 7 END_SYSEX                  (0xF7)
  * -----------------------------------------------------
  */
 ```
@@ -133,8 +135,9 @@ When shock detection is enabled, the following message will be sent at every sam
  * 0 START_SYSEX                (0xF0)
  * 1 CURIE_IMU                  (0x11)
  * 2 CURIE_IMU_SHOCK_DETECT     (0x03)
- * 3 axis (bits 0-3), direction (bit4)
- * 4 END_SYSEX                  (0xF7)
+ * 3 axis (bits 0-3)
+ * 4 direction (bit 0)
+ * 5 END_SYSEX                  (0xF7)
  * -----------------------------------------------------
  */
 ```
@@ -200,8 +203,9 @@ When tap detection is enabled, the following message will be sent at every sampl
  * 0 START_SYSEX                (0xF0)
  * 1 CURIE_IMU                  (0x11)
  * 2 CURIE_IMU_TAP_DETECT       (0x05)
- * 3 axis (bits 0-3), direction (bit4)
- * 4 END_SYSEX                  (0xF7)
+ * 3 axis (bits 0-3)
+ * 4 direction (bit 0)
+ * 5 END_SYSEX                  (0xF7)
  * -----------------------------------------------------
  */
 ```
