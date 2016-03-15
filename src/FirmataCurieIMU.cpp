@@ -9,8 +9,6 @@ static boolean detectShocks = false;
 static boolean countSteps = false;
 static boolean detectTaps = false;
 
-long lastStepCount = 0;
-
 static FirmataCurieIMU* current;
 static void callback(void)
 {
@@ -209,9 +207,10 @@ void FirmataCurieIMU::enableStepCounter(boolean enable)
         CurieIMU.setStepCountEnabled(true);
         CurieIMU.interrupts(CURIE_IMU_STEP);
     } else {
+        CurieIMU.setStepCountEnabled(false);
         CurieIMU.noInterrupts(CURIE_IMU_STEP);
     }
-  countSteps = enable;
+    countSteps = enable;
 }
 
 void FirmataCurieIMU::stepDetected()
@@ -220,62 +219,19 @@ void FirmataCurieIMU::stepDetected()
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_STEP_COUNTER);
-    if (stepCount != lastStepCount) {
-        Firmata.write((byte)stepCount & 0x7F);
-        Firmata.write((byte)(stepCount >> 7) & 0x7F);
-        lastStepCount = stepCount;
-    }
+    Firmata.write((byte)stepCount & 0x7F);
+    Firmata.write((byte)(stepCount >> 7) & 0x7F);
     Firmata.write(END_SYSEX);
 }
 
 void FirmataCurieIMU::enableTapDetection(boolean enable)
 {
-    if (enable) {
-        CurieIMU.interrupts(CURIE_IMU_TAP);
-    }
-    else {
-        CurieIMU.noInterrupts(CURIE_IMU_TAP);
-    }
   detectTaps = enable;
 }
 
 void FirmataCurieIMU::tapDetected()
 {
-    Firmata.write(START_SYSEX);
-    Firmata.write(CURIE_IMU);
-    Firmata.write(CURIE_IMU_TAP_DETECT);
-
-    if (CurieIMU.tapDetected(X_AXIS, POSITIVE)) {
-        Firmata.write(X_AXIS);
-        Firmata.write(POSITIVE);
-    }
-
-    if (CurieIMU.tapDetected(X_AXIS, NEGATIVE)) {
-        Firmata.write(X_AXIS);
-        Firmata.write(NEGATIVE);
-    }
-
-    if (CurieIMU.tapDetected(Y_AXIS, POSITIVE)) {
-        Firmata.write(Y_AXIS);
-        Firmata.write(POSITIVE);
-    }
-
-    if (CurieIMU.tapDetected(Y_AXIS, NEGATIVE)) {
-        Firmata.write(Y_AXIS);
-        Firmata.write(NEGATIVE);
-    }
-
-    if (CurieIMU.tapDetected(Z_AXIS, POSITIVE)) {
-        Firmata.write(Z_AXIS);
-        Firmata.write(POSITIVE);
-    }
-
-    if (CurieIMU.tapDetected(Z_AXIS, NEGATIVE)) {
-        Firmata.write(Z_AXIS);
-        Firmata.write(NEGATIVE);
-    }
-
-    Firmata.write(END_SYSEX);
+  // TODO: implement
 }
 
 void FirmataCurieIMU::readMotion()
@@ -311,8 +267,4 @@ void FirmataCurieIMU::eventCallback()
     if (CurieIMU.getInterruptStatus(CURIE_IMU_STEP) && countSteps) {
         stepDetected();
     }
-    if (CurieIMU.getInterruptStatus(CURIE_IMU_TAP) && detectTaps) {
-        tapDetected();
-    }
 }
-
