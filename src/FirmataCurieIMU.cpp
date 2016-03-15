@@ -205,6 +205,7 @@ void FirmataCurieIMU::shockDetected()
 void FirmataCurieIMU::enableStepCounter(boolean enable)
 {
     if (enable) {
+        CurieIMU.setStepCountEnabled(true);
         CurieIMU.interrupts(CURIE_IMU_STEP);
     } else {
         CurieIMU.noInterrupts(CURIE_IMU_STEP);
