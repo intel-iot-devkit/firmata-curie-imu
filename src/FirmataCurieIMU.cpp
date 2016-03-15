@@ -272,7 +272,7 @@ void FirmataCurieIMU::tapDetected()
         Firmata.write(NEGATIVE);
     }
 
-    Firmata.write(END_SYSEX)
+    Firmata.write(END_SYSEX);
 }
 
 void FirmataCurieIMU::readMotion()
