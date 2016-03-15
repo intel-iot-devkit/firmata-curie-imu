@@ -237,7 +237,6 @@ void FirmataCurieIMU::enableTapDetection(boolean enable)
 
 void FirmataCurieIMU::tapDetected()
 {
-  // TODO: implement
     Firmata.write(START_SYSEX);
     Firmata.write(CURIE_IMU);
     Firmata.write(CURIE_IMU_TAP_DETECT);
