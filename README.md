@@ -99,10 +99,10 @@ https://github.com/hybridgroup/firmata-curie-imu.js
  * 0 START_SYSEX                (0xF0)
  * 1 CURIE_IMU                  (0x11)
  * 2 CURIE_IMU_READ_TEMP        (0x02)
- * 3 float temperature, byte 0, bits 0-6 (LSB)
- * 4 float temperature, byte 0, bits 7-13 (MSB)
- * 5 float temperature, byte 1, bits 0-6 (LSB)
- * 6 float temperature, byte 1, bits 7-13 (MSB)
+ * 3 int16 temperature, byte 0, bits 0-6 (LSB)
+ * 4 int16 temperature, byte 0, bits 7-13 (MSB)
+ * 5 int16 temperature, byte 1, bits 0-6 (LSB)
+ * 6 int16 temperature, byte 1, bits 7-13 (MSB)
  * 7 END_SYSEX                  (0xF7)
  * -----------------------------------------------------
  */
@@ -129,7 +129,7 @@ NONE
 To enable shock detection, send 1 as the enable flag (byte 3). To disable shock detection, send 0 as the enable flag (byte 3).
 
 #### Message
-When shock detection is enabled, the following message will be sent at every sampling interval:
+When shock detection is enabled, the following message will be sent each time that a shock is detected:
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -163,7 +163,7 @@ NONE
 To enable step detection, send 1 as the enable flag (byte 3). To disable step detection, send 0 as the enable flag (byte 3).
 
 #### Message
-When step counting is enabled, the following message will be sent at every sampling interval:
+When step counting is enabled, the following message will be sent each time a new step is registered:
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
@@ -197,7 +197,7 @@ NONE
 To enable tap detection, send 1 as the enable flag (byte 3). To disable tap detection, send 0 as the enable flag (byte 3).
 
 #### Message
-When tap detection is enabled, the following message will be sent at every sampling interval:
+When tap detection is enabled, the following message will be sent each time a tap is detected:
 ```c
  /* -----------------------------------------------------
  * 0 START_SYSEX                (0xF0)
