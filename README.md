@@ -11,7 +11,45 @@ Firmata wrapper for the CurieIMU library on the Arduino101
 
 ## How to use
 
-Instructions on how to create a sketch that uses FirmataCurieIMU
+The simplest possible example that connects the CurieIMU devices, but nothing else within the Firmata interface, would be as follows:
+
+```c
+#include <ConfigurableFirmata.h>
+#include <FirmataExt.h>
+FirmataExt firmataExt;
+
+#include <CurieIMU.h>
+#include <FirmataCurieIMU.h>
+FirmataCurieIMU curieIMU;
+
+void systemResetCallback()
+{
+  firmataExt.reset();
+}
+
+void setup()
+{
+  Firmata.setFirmwareVersion(FIRMATA_MAJOR_VERSION, FIRMATA_MINOR_VERSION);
+
+  firmataExt.addFeature(curieIMU);
+
+  Firmata.attach(SYSTEM_RESET, systemResetCallback);
+  Firmata.begin(57600);
+
+  // set reset to default config
+  systemResetCallback();
+}
+
+void loop()
+{
+  while (Firmata.available()) {
+    Firmata.processInput();
+  }
+}
+
+```
+
+As with any other sketch that uses ConfigurableFirmata, you can choose to include digital, analog, i2c, or any other interface that it supports. There are several examples of sketches that use ConfigurableFirmata along with FirmataCurieIMU in the **examples** directory.
 
 ## Firmata clients
 
@@ -19,7 +57,7 @@ Instructions on how to create a sketch that uses FirmataCurieIMU
 
 Example code that calls the FirmataCurieIMU SYSEX extended interface is here:
 
-https://github.com/hybridgroup/firmata-curie-imu.js
+https://github.com/intel-iot-devkit/firmata-curie-imu.js
 
 ## Protocol
 
