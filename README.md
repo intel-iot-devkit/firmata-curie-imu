@@ -49,7 +49,7 @@ void loop()
 
 ```
 
-As with any other sketch that uses ConfigurableFirmata, you can choose to include digital, analog, i2c, or any other interface that it supports. There are several examples of sketches that use ConfigurableFirmata along with FirmataCurieIMU in the **examples** directory.
+As with any other sketch that uses ConfigurableFirmata, you can choose to include digital, analog, i2c, or any other interface that it supports. There are several examples of sketches that use ConfigurableFirmata along with FirmataCurieIMU in the `examples` directory.
 
 ## Firmata clients
 
