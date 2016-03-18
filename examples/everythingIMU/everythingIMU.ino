@@ -26,6 +26,8 @@ AnalogInputFirmata analogInput;
 #include <AnalogOutputFirmata.h>
 AnalogOutputFirmata analogOutput;
 
+#include <AnalogWrite.h>
+
 #include <Servo.h>
 #include <ServoFirmata.h>
 ServoFirmata myServo;
@@ -42,7 +44,7 @@ void setup()
 
   firmataExt.addFeature(curieIMU);
   firmataExt.addFeature(i2c);
-  
+
   firmataExt.addFeature(digitalOutput);
   firmataExt.addFeature(digitalInput);
 
