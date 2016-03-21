@@ -35,6 +35,14 @@ ServoFirmata myServo;
 
 void systemResetCallback()
 {
+  // reset digital/analog output pins
+  for (byte i = 0; i < TOTAL_PINS; i++) {
+    if (IS_PIN_ANALOG(i)) {
+        Firmata.setPinMode(i, PIN_MODE_ANALOG);
+    } else if (IS_PIN_DIGITAL(i)) {
+        Firmata.setPinMode(i, OUTPUT);
+    }
+  }
   firmataExt.reset();
 }
 
@@ -62,13 +70,14 @@ void setup()
 
 void loop()
 {
+  digitalInput.report();
+
   while (Firmata.available()) {
     Firmata.processInput();
   }
 
   if (reporting.elapsed()) {
     i2c.report();
-    digitalInput.report();
     analogInput.report();
   }
 }
